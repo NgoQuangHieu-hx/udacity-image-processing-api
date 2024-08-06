@@ -1,9 +1,10 @@
+import fs from 'fs';
+import path from 'path';
+import sinon from 'sinon';
+import sharp from 'sharp';
 import express from 'express';
 import request from 'supertest';
-import sinon from 'sinon';
-import fs from 'fs';
-import sharp from 'sharp';
-import routes from '../routes/index'
+import routes from '../routes/index';
 
 const app = express();
 app.use(routes);
@@ -13,7 +14,19 @@ describe('GET /images', () => {
     let resizeStub: sinon.SinonStub;
 
     beforeEach(() => {
-        const readFileSyncStub = sinon.stub(fs, 'readdirSync').returns(['test.jpg']);
+        const direntMock: fs.Dirent = {
+            name: 'test.jpg',
+            isFile: () => true,
+            isDirectory: () => false,
+            isSymbolicLink: () => false,
+            isBlockDevice: () => false,
+            isCharacterDevice: () => false,
+            isFIFO: () => false,
+            isSocket: () => false,
+        } as unknown as fs.Dirent;
+
+        readFileSyncStub = sinon.stub(fs, 'readdirSync').returns([direntMock]);
+
         resizeStub = sinon.stub(sharp.prototype, 'resize').returnsThis();
         sinon.stub(sharp.prototype, 'toBuffer').resolves(Buffer.from('test image data'));
     });
@@ -51,7 +64,6 @@ describe('GET /images', () => {
 
     it('should return an error if file is not found', async () => {
         readFileSyncStub.returns([]);
-
         const response = await request(app)
             .get('/images')
             .query({ filename: 'test', width: '200', height: '200' });
