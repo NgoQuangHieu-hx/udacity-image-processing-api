@@ -5,17 +5,22 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "jasmin": "jasmin",
-    "start": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "jasmine": "jasmine",
+    "start": "nodemon src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/node": "^22.1.0",
+    "@types/sinon": "^17.0.3",
+    "@types/supertest": "^6.0.2",
+    "jasmine": "^5.2.0",
     "nodemon": "^3.1.4",
+    "sinon": "^18.0.0",
+    "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },
