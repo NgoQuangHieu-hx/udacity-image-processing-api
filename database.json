@@ -1,0 +1,17 @@
+{
+    "dev": {
+        "driver": "pg",
+        "host": "127.0.0.1",
+        "database": "uda",
+        "user": "postgres",
+        "password": ""
+    },
+    "test": {
+        "driver": "pg",
+        "host": "127.0.0.1",
+        "database": "uda",
+        "user": "postgres",
+        "password": "password123"
+    }
+}
+
